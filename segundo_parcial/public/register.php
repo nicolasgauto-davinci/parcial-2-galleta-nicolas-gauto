@@ -21,7 +21,7 @@ session_start();
         <label>Contraseña:</label>
         <input type="password" name="nueva_clave" required><br>
         <label>Fecha de nacimiento:</label>
-        <input type="date" required><br>
+        <input type="date" name="nueva_fecha_nac" required><br>
         <button type="submit">Guardar</button>
     </form>
 

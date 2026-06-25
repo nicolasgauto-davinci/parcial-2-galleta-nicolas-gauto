@@ -16,7 +16,8 @@ if (!isset($_SESSION['usuario'])){
     }
 }
 
-require_once 'frases.php';
+require_once __DIR__ . '/frases.php';
+//require_once 'frases.php'; ESTE ES EL QUE VA, BORRAR EL DE ARRIBA
 
 $cantFrases = count($frases);
 $numAlAzar = rand(0, $cantFrases - 1);
