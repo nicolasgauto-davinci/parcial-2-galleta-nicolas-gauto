@@ -7,6 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST
     exit();
 }
 
+// Me conecto a la base de datos
+require_once "conexion.php";
 
 /*Obtengo los datos del formulario con filter input, y lo limpio con trim*/
 $usuario_login = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);   
@@ -16,25 +18,39 @@ if ($usuario_login !== null){
     $usuario_login = trim($usuario_login);
 }
 
+if ($clave_login !== null){
+    $clave_login = trim($clave_login);
+}
+
 /*Valido que ambos campos esten completos */
 if ($usuario_login === '' || $clave_login === '') {
     header("Location: login.php?error=1");
     exit();
 }
 
-// Valido que el usuario exista en la base de datos
-if (!isset($_SESSION['usuarios_registrados'][$usuario_login])){
+//Verifico que el usuario exista en la base de datos
+$stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ?");
+$stmt->bind_param("s", $usuario_login);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+if($resultado->num_rows === 0){
+    $stmt->close();
     header("Location: login.php?error=5");
     exit();
 }
+$stmt->close();
 
-/*Guardo los datos que envie del array usuarios_registrados de procesar_registro en una base de datos */
-$usuarios = isset($_SESSION['usuarios_registrados']) ? $_SESSION['usuarios_registrados']:[];
+/* Mi idea para chequear que el usuario y contraseña sean el mismo, es preparar un select id donde usuario = ? y clave = ?,
+ y si el ese user y clave pertenecen a ese id, les deja entrar*/
 
-/*Verifico las credenciales */
-$loginValido = isset($usuarios[$usuario_login]) && $usuarios[$usuario_login] === $clave_login;
+//Verifico que sean correctas las credenciales para ingresar
+$stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ? AND clave = ?");
+$stmt->bind_param("ss", $usuario_login, $clave_login);
+$stmt->execute();
+$resultado = $stmt->get_result();
 
-if ($loginValido){
+if($resultado->num_rows > 0){
     session_regenerate_id(true);
     $_SESSION['usuario'] = $usuario_login;
 
@@ -51,21 +67,15 @@ if ($loginValido){
                 'samesite' => 'Strict'
             ]);
     }
-
-
+    $stmt->close();
     header('Location: home.php');
-    exit();
-} 
-
-
-/*Si algun dato del login es incorrecto */
-else{
-    header('Location: login.php?error=2');
     exit();
 }
 
-
-
-
+else{
+    $stmt->close();
+    header('Location: login.php?error=2');
+    exit();
+}
 
 ?>

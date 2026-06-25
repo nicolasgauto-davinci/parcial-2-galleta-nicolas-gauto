@@ -16,9 +16,11 @@ if (!isset($_SESSION['usuario'])){
     }
 }
 
-require_once __DIR__ . '/frases.php';
-//require_once 'frases.php'; ESTE ES EL QUE VA, BORRAR EL DE ARRIBA
-
+//Obtengo el JSON
+$archivo_frases = file_get_contents('frases.json');
+//Lo convierto en un array php
+$frases = json_decode($archivo_frases);
+//Hago que me traiga uno al azar
 $cantFrases = count($frases);
 $numAlAzar = rand(0, $cantFrases - 1);
 $consejo = $frases[$numAlAzar];
