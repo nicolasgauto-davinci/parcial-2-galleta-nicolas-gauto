@@ -1,0 +1,24 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../img/fondo.png);
+    background-size: 100%;
+}
+
+.resaltado{
+    background-color: #ffffff;
+}
+
+h1{
+    justify-content: center;
+    align-items: center;
+}
+
+form, p{
+    text-align: left;
+    width: 10%;
+}
