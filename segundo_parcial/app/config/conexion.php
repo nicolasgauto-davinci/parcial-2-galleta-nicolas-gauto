@@ -11,7 +11,6 @@ try{
     //Lo que intento hacer
     $mysqli = new mysqli($host, $user, $password, $dbname);
     $mysqli->set_charset("utf8mb4");
-    echo "Conexion exitosa";
 }catch(Exception $ex){
     //Si hay algun problema se ejecuta esto
     //La funcion die termina todo el proceso
