@@ -14,7 +14,7 @@ try{
     echo "Conexion exitosa";
 }catch(Exception $ex){
     //Si hay algun problema se ejecuta esto
-    //La funcion dia termina todo el proceso
+    //La funcion die termina todo el proceso
     die("Error al conectarse: " . $ex->getMessage());
 }
 

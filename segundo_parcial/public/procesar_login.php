@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST
 }
 
 // Me conecto a la base de datos
-require_once "conexion.php";
+require_once "../app/config/conexion.php";
 
 /*Obtengo los datos del formulario con filter input, y lo limpio con trim*/
 $usuario_login = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);   

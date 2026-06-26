@@ -16,14 +16,26 @@ if (!isset($_SESSION['usuario'])){
     }
 }
 
-//Obtengo el JSON
-$archivo_frases = file_get_contents('frases.json');
-//Lo convierto en un array php
-$frases = json_decode($archivo_frases);
-//Hago que me traiga uno al azar
-$cantFrases = count($frases);
-$numAlAzar = rand(0, $cantFrases - 1);
-$consejo = $frases[$numAlAzar];
+require_once "../app/config/conexion.php";
+
+$resultado = $mysqli->query("SELECT texto FROM frases ORDER BY RAND() LIMIT 1");
+$fila = $resultado->fetch_assoc();
+$consejo = $fila['texto'];
+
+$stmt = $mysqli->prepare("INSERT INTO historial_galletas (usuario, mensaje) VALUES(?, ?)");
+$stmt->bind_param("ss", $_SESSION['usuario'], $consejo);
+$stmt->execute();
+$stmt->close();
+
+/*
+// API Clima
+// Uso la url de la api para obtener los datos
+$apiUrl = "https://api.rainbow.ai/nowcast/v1/precip/-58.3816/-34.6037";
+// Realizo la solicitud HTTP a la API y obtengo la respuesta
+$response = file_get_contents($apiUrl);
+// Decodifoco la respuesta JSON en un arreglo
+$data = json_decode($response, true);
+*/
 
 ?>
 
@@ -45,9 +57,12 @@ $consejo = $frases[$numAlAzar];
     <main>
         <h1>GALLETA CHINA DE LA FORTUNA</h1>
         <article>
-            <p>¡Su fortuna fue escrita por nuestros sabios antepasados!</p>
+            <p>¡Su fortuna fue escrita por nuestros sabios antepasados! Y de yapa, te hacemos un full service y te pasamos el clima actual en CABA</p>
             <h3><?php echo htmlspecialchars($consejo);
              ?></h3>
+             <div id="clima">
+                <p><em>Consultando el clima en CABA...</em></p>
+             </div>
             <p>Haga click en la galleta nuevamente para saber su nueva fortuna</p>
             <div class="foto"><a href="./galleta.php"><img class="galleta" src="./assets/img/galleta abierta.png"></a></div>
         </article>

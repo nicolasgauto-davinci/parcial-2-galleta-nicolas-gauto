@@ -24,6 +24,7 @@ session_start();
         <input type="date" name="nueva_fecha_nac" required><br>
         <button type="submit">Guardar</button>
     </form>
+    <p><a href="./login.php">Volver</a></p>
 
 <?php
 
