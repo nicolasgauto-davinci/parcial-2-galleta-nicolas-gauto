@@ -11,17 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST
 //Generacion del archivo para registrar los eventos
 $archivo = '../EventosCriticos.txt';
 $modo = "a";
-//Genero un fechaActual para poder poner en el log. Consultar si me conviene hacer esto, o llamar de php
-$fechaActual = date('d-m-Y H:i:s');
 
 // Me conecto a la base de datos
 require_once "../app/config/conexion.php";
 
 /*Obtengo los datos del formulario con filter input, y lo limpio con trim*/
-$usuario = filter_input(INPUT_POST, 'nuevo_usuario', FILTER_SANITIZE_SPECIAL_CHARS);
-$clave = filter_input(INPUT_POST, 'nueva_clave');
-$email = filter_input(INPUT_POST, 'nuevo_email', FILTER_SANITIZE_EMAIL);
-$fecha_nac = filter_input(INPUT_POST, 'nueva_fecha_nac');
+$usuario = filter_input(INPUT_POST, 'nuevoUsuario', FILTER_SANITIZE_SPECIAL_CHARS);
+$clave = filter_input(INPUT_POST, 'nuevaClave');
+$email = filter_input(INPUT_POST, 'nuevoEmail', FILTER_SANITIZE_EMAIL);
+$fechaNac = filter_input(INPUT_POST, 'nuevaFechaNac');
 
 if ($usuario !== null){
     $usuario = trim($usuario);
@@ -35,12 +33,12 @@ if ($email !== null){
     $email = trim($email);
 }
 
-if ($fecha_nac !== null){
-    $fecha_nac = trim($fecha_nac);
+if ($fechaNac !== null){
+    $fechaNac = trim($fechaNac);
 }
 
 /*Valido que todos los campos esten completos */
-if($usuario === '' || $clave === '' || $email === '' || $fecha_nac === ''){
+if($usuario === '' || $clave === '' || $email === '' || $fechaNac === ''){
     header("Location: register.php?error=3");
     exit();
 }
@@ -73,10 +71,11 @@ $stmt->close();
 
 //Una vez que verifique todo, guardo los nuevos datos
 $stmt = $mysqli->prepare("INSERT INTO usuarios (email, usuario, clave, fecha_nacimiento) VALUES (?,?,?,?)");
-$stmt->bind_param("ssss", $email, $usuario, $clave, $fecha_nac);
+$stmt->bind_param("ssss", $email, $usuario, $clave, $fechaNac);
 $stmt->execute();
 $stmt->close();
 
+$fechaActual = date('d-m-Y H:i:s');
 //Cada vez que se genere un nuevo usuario de forma correcta, se guarda este suceso
 $manejador = fopen($archivo, $modo);
 

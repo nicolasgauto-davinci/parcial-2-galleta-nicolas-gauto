@@ -7,3 +7,4 @@ Se intento iniciar sesión con el siguiente dato de Usuario inexistente: 'asdfg'
 Se intento iniciar sesión con los siguientes datos: Usuario: fati. Clave: asdfg. Fecha del suceso: 29-06-2026 19:14:59
 Se intento iniciar sesión en el usuario 'fati' con una clave incorrecta 'asdfgj'. Fecha del suceso: 29-06-2026 19:16:13
 Se genero correctamente el nuevo usuario 'santi'. Fecha del suceso: 29-06-2026 19:26:44
+Se genero correctamente el nuevo usuario 'hilen'. Fecha del suceso: 29-06-2026 19:54:47

@@ -11,8 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST
 //Generacion del archivo para registrar los eventos
 $archivo = '../EventosCriticos.txt';
 $modo = "a";
-//Genero un fechaActual para poder poner en el log. Consultar si me conviene hacer esto, o llamar de php
-$fechaActual = date('d-m-Y H:i:s');
 
 // Me conecto a la base de datos
 require_once "../app/config/conexion.php";
@@ -34,6 +32,8 @@ if ($usuarioLogin === '' || $claveLogin === '') {
     header("Location: login.php?error=1");
     exit();
 }
+
+$fechaActual = date('d-m-Y H:i:s');
 
 //Verifico que el usuario exista en la base de datos
 $stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ?");

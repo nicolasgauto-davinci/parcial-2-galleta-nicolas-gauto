@@ -15,13 +15,13 @@ session_start();
     <h2 class="resaltado">Registrarse</h2>
     <form class="resaltado" action="procesar_registro.php" method="POST">
         <label>Mail:</label>
-        <input type="email" name="nuevo_email" required><br>
+        <input type="email" name="nuevoEmail" required><br>
         <label>Usuario:</label>
-        <input type="text" name="nuevo_usuario" required><br>
+        <input type="text" name="nuevoUsuario" required><br>
         <label>Contraseña:</label>
-        <input type="password" name="nueva_clave" required><br>
+        <input type="password" name="nuevaClave" required><br>
         <label>Fecha de nacimiento:</label>
-        <input type="date" name="nueva_fecha_nac" required><br>
+        <input type="date" name="nuevaFechaNac" required><br>
         <button type="submit">Guardar</button>
     </form>
     <p><a href="./login.php">Volver</a></p>
