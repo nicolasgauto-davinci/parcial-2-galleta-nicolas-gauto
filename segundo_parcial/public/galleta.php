@@ -35,7 +35,7 @@ $stmt->close();
 
 
 
-
+/*
 // API Clima
 // Uso la url de la api para obtener los datos
 $apiUrl = "https://api.openweathermap.org/data/4.0/onecall/current?lat=-34.6037&lon=-58.3816&lang=es&appid=1ed7394a8b564ee8b32f9d19cc920fc9";
@@ -43,7 +43,7 @@ $apiUrl = "https://api.openweathermap.org/data/4.0/onecall/current?lat=-34.6037&
 $response = file_get_contents($apiUrl);
 // Decodifoco la respuesta JSON en un arreglo
 $clima = json_decode($response, true);
-
+*/
 
 ?>
 
@@ -72,12 +72,12 @@ $clima = json_decode($response, true);
             ?></p>
              <div id="clima">
                 <p><em>Consultando el clima en CABA...</em></p>
-                <h2><?php echo htmlspecialchars($clima);
-                ?></h2>
              </div>
             <p>Haga click en la galleta nuevamente para saber su nueva fortuna</p>
             <div class="foto"><a href="./galleta.php"><img class="galleta" src="./assets/img/galleta abierta.png"></a></div>
         </article>
     </main>
+
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>

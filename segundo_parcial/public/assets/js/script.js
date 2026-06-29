@@ -1,4 +1,21 @@
-const apiUrl = 'https://api.openweathermap.org/data/4.0/onecall/current?lat=-34.6037&lon=-58.3816&lang=es&appid=1ed7394a8b564ee8b32f9d19cc920fc9';
+const apiUrl = 'http://api.weatherapi.com/v1/current.json?q=-34.6037,-58.3816&lang=es&key=01e325166d2a4718ac4181537262806';
 
-const contClima = document.getElementById("clima");
+const cajaClima = document.getElementById("clima");
 
+fetch(apiUrl)
+.then(response => {
+    if(!response.ok){
+        throw new Error(`Rechazo del servidor: ${response.status}`);
+    }
+    return response.json();
+})
+.then(data => {
+    const temperatura = Math.round(data.current.temp_c);
+    const descripcion = data.current.condition.text;
+
+    cajaClima.innerHTML = `<p>Clima en CABA: ${temperatura}°C, ${descripcion}.</p>`
+})
+.catch(error =>{
+    console.error("Falla en la peticion AJAX: ", error);
+    cajaClima.innerHTML= `<p>No se pudo obtener el clima actual</p>`
+});
