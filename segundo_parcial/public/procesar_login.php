@@ -34,7 +34,6 @@ if ($usuarioLogin === '' || $claveLogin === '') {
 }
 
 $fechaActual = date('d-m-Y H:i:s');
-
 //Verifico que el usuario exista en la base de datos
 $stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ?");
 $stmt->bind_param("s", $usuarioLogin);
@@ -91,7 +90,14 @@ if($resultado->num_rows > 0){
             ]);
     }
     $stmt->close();
-    header('Location: home.php');
+
+    if($usuarioLogin === 'admin'){
+        header('Location: admin.php');
+    }
+    else{
+        header('Location: home.php');
+    }
+
     exit();
 }
 

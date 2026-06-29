@@ -9,8 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST
 }
 
 //Generacion del archivo para registrar los eventos
-$archivo = '../EventosCriticos.txt';
-$modo = "a";
+
 
 // Me conecto a la base de datos
 require_once "../app/config/conexion.php";

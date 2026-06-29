@@ -8,3 +8,8 @@ Se intento iniciar sesión con los siguientes datos: Usuario: fati. Clave: asdfg
 Se intento iniciar sesión en el usuario 'fati' con una clave incorrecta 'asdfgj'. Fecha del suceso: 29-06-2026 19:16:13
 Se genero correctamente el nuevo usuario 'santi'. Fecha del suceso: 29-06-2026 19:26:44
 Se genero correctamente el nuevo usuario 'hilen'. Fecha del suceso: 29-06-2026 19:54:47
+Se genero correctamente el nuevo usuario 'admin'. Fecha del suceso: 29-06-2026 20:09:02
+El usuario 'admin' inicio sesión. Fecha del suceso: 29-06-2026 20:09:07
+El usuario 'admin' inicio sesión. Fecha del suceso: 29-06-2026 20:14:21
+El usuario 'admin' inicio sesión. Fecha del suceso: 29-06-2026 20:17:37
+Se generó el consejo 'Tendrás entera satisfacción al final de esta temporada. Prepárate.' al usuario 'admin'. Fecha del suceso: 29-06-2026 20:20:39

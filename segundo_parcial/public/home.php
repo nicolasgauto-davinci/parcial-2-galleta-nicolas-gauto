@@ -32,6 +32,11 @@ if (!isset($_SESSION['usuario'])){
     <header>
         <a href="./home.php">Inicio</a>
         <a href="./logout.php">Cerrar sesión</a>
+        <?php
+        if($_SESSION['usuario'] === 'admin'){
+            echo "<a href='./admin.php'>Admin</a>";
+        }
+        ?>
     </header>
     
     <main>
