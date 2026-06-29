@@ -1,4 +1,4 @@
-const apiUrl = 'http://api.weatherapi.com/v1/current.json?q=-34.6037,-58.3816&lang=es&key=01e325166d2a4718ac4181537262806';
+const apiUrl = 'https://api.weatherapi.com/v1/current.json?q=-34.6037,-58.3816&lang=es&key=01e325166d2a4718ac4181537262806';
 
 const cajaClima = document.getElementById("clima");
 

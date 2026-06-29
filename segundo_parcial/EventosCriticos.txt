@@ -1,0 +1,9 @@
+Se generó el consejo Tu corazón estallara de alegría con la llegada de buenas noticias. al usuario nico. Fecha del suceso: 29-06-2026 18:57:19
+Se generó el consejo No todo el mundo puede recibir las mismas cosas. Se practico. al usuario nico. Fecha del suceso: 29-06-2026 18:57:43
+Se generó el consejo 'Hoy compartirás las horas mas tiernas de tu vida con alguien muy amado.' al usuario 'nico'. Fecha del suceso: 29-06-2026 18:58:23
+El usuario 'fati' inicio sesión. Fecha del suceso: 30-06-2026 00:07:31
+El usuario 'fati' inicio sesión. Fecha del suceso: 29-06-2026 19:08:32
+Se intento iniciar sesión con el siguiente dato de Usuario inexistente: 'asdfg'. Fecha del suceso: 29-06-2026 19:14:48
+Se intento iniciar sesión con los siguientes datos: Usuario: fati. Clave: asdfg. Fecha del suceso: 29-06-2026 19:14:59
+Se intento iniciar sesión en el usuario 'fati' con una clave incorrecta 'asdfgj'. Fecha del suceso: 29-06-2026 19:16:13
+Se genero correctamente el nuevo usuario 'santi'. Fecha del suceso: 29-06-2026 19:26:44

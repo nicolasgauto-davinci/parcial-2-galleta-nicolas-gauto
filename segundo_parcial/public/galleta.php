@@ -33,17 +33,22 @@ $stmt->bind_param("ss", $_SESSION['usuario'], $consejo);
 $stmt->execute();
 $stmt->close();
 
+//Generacion del archivo para registrar los eventos
+$archivo = '../EventosCriticos.txt';
+$modo = "a";
+
+//Cada vez que se recargue la pagina, va a guardar este dato.
+
+$manejador = fopen($archivo, $modo);
+
+if($manejador){
+    $contenido= "Se generó el consejo '" . $consejo . "' al usuario '" . $_SESSION['usuario'] . "'. Fecha del suceso: " . $fechaActual . "\n";
+    fwrite($manejador, $contenido);
+    fclose($manejador);
+}
 
 
-/*
-// API Clima
-// Uso la url de la api para obtener los datos
-$apiUrl = "https://api.openweathermap.org/data/4.0/onecall/current?lat=-34.6037&lon=-58.3816&lang=es&appid=1ed7394a8b564ee8b32f9d19cc920fc9";
-// Realizo la solicitud HTTP a la API y obtengo la respuesta
-$response = file_get_contents($apiUrl);
-// Decodifoco la respuesta JSON en un arreglo
-$clima = json_decode($response, true);
-*/
+
 
 ?>
 

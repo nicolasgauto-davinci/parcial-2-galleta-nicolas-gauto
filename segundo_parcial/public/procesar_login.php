@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST, vuelve al login
@@ -7,58 +8,80 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST
     exit();
 }
 
+//Generacion del archivo para registrar los eventos
+$archivo = '../EventosCriticos.txt';
+$modo = "a";
+//Genero un fechaActual para poder poner en el log. Consultar si me conviene hacer esto, o llamar de php
+$fechaActual = date('d-m-Y H:i:s');
+
 // Me conecto a la base de datos
 require_once "../app/config/conexion.php";
 
 /*Obtengo los datos del formulario con filter input, y lo limpio con trim*/
-$usuario_login = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);   
-$clave_login = filter_input(INPUT_POST, 'clave');
+$usuarioLogin = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_SPECIAL_CHARS);   
+$claveLogin = filter_input(INPUT_POST, 'clave');
 
-if ($usuario_login !== null){
-    $usuario_login = trim($usuario_login);
+if ($usuarioLogin !== null){
+    $usuarioLogin = trim($usuarioLogin);
 }
 
-if ($clave_login !== null){
-    $clave_login = trim($clave_login);
+if ($claveLogin !== null){
+    $claveLogin = trim($claveLogin);
 }
 
 /*Valido que ambos campos esten completos */
-if ($usuario_login === '' || $clave_login === '') {
+if ($usuarioLogin === '' || $claveLogin === '') {
     header("Location: login.php?error=1");
     exit();
 }
 
 //Verifico que el usuario exista en la base de datos
 $stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ?");
-$stmt->bind_param("s", $usuario_login);
+$stmt->bind_param("s", $usuarioLogin);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
 if($resultado->num_rows === 0){
     $stmt->close();
     header("Location: login.php?error=5");
+    //Cada vez que un alguien trate de iniciar sesión con un usuario que no existe, se va a guardar este suceso
+    $manejador = fopen($archivo, $modo);
+
+    if($manejador){
+        $contenido= "Se intento iniciar sesión con el siguiente dato de Usuario inexistente: '" . $usuarioLogin . "'. Fecha del suceso: " . $fechaActual . "\n";
+        fwrite($manejador, $contenido);
+        fclose($manejador);
+    }
     exit();
 }
 $stmt->close();
 
 /* Mi idea para chequear que el usuario y contraseña sean el mismo, es preparar un select id donde usuario = ? y clave = ?,
- y si el ese user y clave pertenecen a ese id, les deja entrar*/
-
+y si el ese user y clave pertenecen a ese id, les deja entrar*/
 //Verifico que sean correctas las credenciales para ingresar
 $stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE usuario = ? AND clave = ?");
-$stmt->bind_param("ss", $usuario_login, $clave_login);
+$stmt->bind_param("ss", $usuarioLogin, $claveLogin);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
 if($resultado->num_rows > 0){
     session_regenerate_id(true);
-    $_SESSION['usuario'] = $usuario_login;
+    $_SESSION['usuario'] = $usuarioLogin;
+
+    //Cada vez que un usuario inicie sesión de forma correcta, se va a guardar este suceso
+    $manejador = fopen($archivo, $modo);
+
+    if($manejador){
+        $contenido= "El usuario '" . $usuarioLogin . "' inicio sesión. Fecha del suceso: " . $fechaActual . "\n";
+        fwrite($manejador, $contenido);
+        fclose($manejador);
+    }
 
     /*Si se selecciono la opcion de recordar */
     if (isset($_POST['recordar'])){
         setcookie(
             "usuario", 
-            $usuario_login,
+            $usuarioLogin,
             [
                 'expires' => time() + (60 * 60 * 24 * 7),
                 'path' => '/',
@@ -75,6 +98,14 @@ if($resultado->num_rows > 0){
 else{
     $stmt->close();
     header('Location: login.php?error=2');
+    //Cada vez que un alguien trate de iniciar sesión de forma incorrecta, se va a guardar este suceso
+    $manejador = fopen($archivo, $modo);
+
+    if($manejador){
+        $contenido= "Se intento iniciar sesión en el usuario '" . $usuarioLogin . "' con una clave incorrecta '" . $claveLogin . "'. Fecha del suceso: " . $fechaActual . "\n";
+        fwrite($manejador, $contenido);
+        fclose($manejador);
+    }
     exit();
 }
 

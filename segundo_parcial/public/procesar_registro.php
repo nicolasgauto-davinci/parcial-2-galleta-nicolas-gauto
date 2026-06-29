@@ -1,11 +1,18 @@
 <?php
 declare(strict_types=1);
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {    //Si el request no viene de POST, vuelve al login
     header("Location: login.php");
     exit();
 }
+
+//Generacion del archivo para registrar los eventos
+$archivo = '../EventosCriticos.txt';
+$modo = "a";
+//Genero un fechaActual para poder poner en el log. Consultar si me conviene hacer esto, o llamar de php
+$fechaActual = date('d-m-Y H:i:s');
 
 // Me conecto a la base de datos
 require_once "../app/config/conexion.php";
@@ -69,6 +76,15 @@ $stmt = $mysqli->prepare("INSERT INTO usuarios (email, usuario, clave, fecha_nac
 $stmt->bind_param("ssss", $email, $usuario, $clave, $fecha_nac);
 $stmt->execute();
 $stmt->close();
+
+//Cada vez que se genere un nuevo usuario de forma correcta, se guarda este suceso
+$manejador = fopen($archivo, $modo);
+
+if($manejador){
+    $contenido= "Se genero correctamente el nuevo usuario '" . $usuario . "'. Fecha del suceso: " . $fechaActual . "\n";
+    fwrite($manejador, $contenido);
+    fclose($manejador);
+}
 
 header('Location: login.php');
 exit();
