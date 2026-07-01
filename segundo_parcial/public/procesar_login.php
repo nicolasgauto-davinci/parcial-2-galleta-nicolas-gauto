@@ -77,7 +77,8 @@ if($resultado->num_rows > 0){
     }
 
     /*Si se selecciono la opcion de recordar */
-    if (isset($_POST['recordar'])){
+    //No guarda la cookie de recordar si inicia sesion el admin
+    if (isset($_POST['recordar']) && ($_SESSION['usuario'] !== 'admin')){
         setcookie(
             "usuario", 
             $usuarioLogin,
